@@ -1,0 +1,37 @@
+[
+  {
+    "_id": "fc91a854-33e6-4fa9-86e4-656660e4fcc9",
+    "usuario": "hola",
+    "contraseña": "$2b$10$sposbYoKRxcttGUWRKBp/uzFxJUKp7WTGn.s/fJouQ7/dBAt8cBR2"
+  },
+  {
+    "_id": "58f2640c-9b15-4d63-8607-725dbc3765a7",
+    "usuario": "maurici",
+    "contraseña": "$2b$10$IxTcTdkEG.DOL0ZE../xt.lihhQ6c9ytyBja9upWMY9FU5XaGr1nS"
+  },
+  {
+    "_id": "cbe55687-627d-481e-b327-350d01d5b2b1",
+    "usuario": "ferchu",
+    "contraseña": "$2b$10$J93CUYlixtyNof0RC6e.ieTVNznOZr.qcEjzxRpUeVCHNUXC0RH4K"
+  },
+  {
+    "_id": "06479c41-8c95-4689-8f74-d1ff794992bb",
+    "usuario": "fer",
+    "contraseña": "$2b$10$3NxiXAhVe08eS2yvUGLRqO1IEHXynj/WmSO/axasv3edTbvqA1bzC"
+  },
+  {
+    "_id": "18379a8d-222e-457b-a803-b420c1991328",
+    "usuario": "mau",
+    "contraseña": "123456125124"
+  },
+  {
+    "_id": "ea9433c5-295e-477b-826d-3a8bdc1c436e",
+    "usuario": "mauri",
+    "contraseña": "123456"
+  },
+  {
+    "_id": "21bd966e-8c8c-4a4d-ab93-c9f5551ebc5c",
+    "usuario": "mauricio",
+    "contraseña": "123456"
+  }
+]

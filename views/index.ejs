@@ -75,46 +75,44 @@
 </style>
 <body>
   <div class="container">
-    <% if (typeof usuario !=='undefined' )  { %>
-    <div class="form-container">
-      <h2>Bienvenido <%= usuario %>!</h2>
-      <p>Este es el panel de administracion</p>
-      <button id="close-session">Cerrar sesion</button>
-    </div>
-   <% } %>
+    <% if (name) { %> <!-- Cambiar a 'name' para mostrar el panel si el usuario está autenticado -->
+      <div class="form-container">
+        <h2>Bienvenido <%= name %>!</h2>
+        <p>Este es el panel de administración</p>
+        <button id="close-session">Cerrar sesión</button>
+      </div>
+    <% } else { %> <!-- Mostrar formularios solo si no hay usuario autenticado -->
+      <div class="form-container">
+        <form id="login-form">
+          <h2>Login</h2>
+          <label for="login-username">Usuario</label>
+          <input type="text" id="login-username" required>
 
-   <% if (typeof username ==='undefined') { %>
-    <div class="form-container">
-      <form  id="login-form">
-        <h2>Login</h2>
-        <label for="login-username">Usuario</label>
-        <input type="text" id="login-username" required>
+          <label for="login-password">Contraseña</label>
+          <input type="password" id="login-password" name="password" required>
 
-        <label for="login-password">Contraseña</label>
-        <input type="password" id="login-password" name="password" required>
+          <button type="submit">Logearse</button>
+          <span>&nbsp;</span>
+        </form>
+      </div>
 
-        <button type="submit">Logearse</button>
-        <span>&nbsp;</span>
-      </form>
-    </div>
+      <div class="form-container">
+        <form id="register-form">
+          <h2>Regístrate</h2>
+          <label for="register-username">Usuario</label>
+          <input type="text" id="register-username" required>
 
-    <div class="form-container">
-      <form  id="register-form">
-        <h2>Registrate</h2>
-        <label for="register-username">Usuario</label>
-        <input type="text" id="register-username" required>
-
-        <label for="register-password">Contraseña</label>
-        <input type="password" id="register-password" name="password" required>
-        
-        <label for="register-confirm-password">Confirmar la Contraseña</label>
-        <input type="password" id="register-confirm-password" name="password" required>
-        
-        <button type="submit">Registrarse</button>
-        <span>&nbsp;</span>
-      </form>
-    </div>
-   <%  } %>
+          <label for="register-password">Contraseña</label>
+          <input type="password" id="register-password" name="password" required>
+          
+          <label for="register-confirm-password">Confirmar la Contraseña</label>
+          <input type="password" id="register-confirm-password" name="password" required>
+          
+          <button type="submit">Registrarse</button>
+          <span>&nbsp;</span>
+        </form>
+      </div>
+    <% } %> <!-- Fin de la condición para el formulario -->
   </div>
 
   <script>
@@ -122,80 +120,85 @@
 
 
     const loginForm = $('#login-form')
-    const loginSpan = $('#login-form span')
+const loginSpan = $('#login-form span')
 
-    const registerForm = $('register-form')
-    const registerSpan = $('#register-form span')
+const registerForm = $('#register-form') // Corregido
+const registerSpan = $('#register-form span')
 
-    const logoutButton = $('close-session')
+const logoutButton = $('#close-session')
 
-    loginForm?.addEventListener('submit', e => {
-      e.preventDefault()
-      const username = $('#login-username').value
-      const password = $('#login-paswword').value
+loginForm?.addEventListener('submit', e => {
+  e.preventDefault()
+  const username = $('#login-username').value
+  const password = $('#login-password').value
 
-      fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ usuario, contraseña })
-      })
-      .then(res => {
-        if (res.ok) {
-          loginSpan.innerText = 'Sesion iniciada ... Entrando ...'
-          loginSpan.style.color = 'green'
-          setTimeout(() => {
-            window.location.href = '/protected'
-          }, 2000)
-        } else {
-          loginSpan.innerText = 'Ocurrio un error a iniciar sesion'
-          loginSpan.style.color = 'red'
-        }
-      })
-    })
+  fetch('/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ usuario: username, contraseña: password }) // Cambié las claves
+  })
+  .then(res => {
+    if (res.ok) {
+      loginSpan.innerText = 'Sesión iniciada ... Entrando ...'
+      loginSpan.style.color = 'green'
+      setTimeout(() => {
+        window.location.href = '/protected'
+      }, 2000)
+    } else {
+      loginSpan.innerText = 'Ocurrió un error al iniciar sesión'
+      loginSpan.style.color = 'red'
+    }
+  })
+})
 
+registerForm?.addEventListener('submit', e => {
+  e.preventDefault()
+  const username = $('#register-username').value
+  const password = $('#register-password').value // Corregido
+  const confirmPassword = $('#register-confirm-password').value
 
-    registerForm?.addEventListener('submit', e => {
-      e.preventDefault()
-      const username = $('#register-username').value
-      const password = $('#register-paswword').value
-      const confirmPassword = $('#register-confirm-password').value
+  if (password !== confirmPassword) {
+    registerSpan.innerText = 'Las contraseñas no coinciden'
+    registerSpan.style.color = 'red'
+    return
+  }
 
-      fetch('/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ usuario, contraseña })
-      })
-      .then(res => {
-        if (res.ok) {
-          registerSpan.innerText = 'Sesion iniciada ... Entrando ...'
-          registerSpan.style.color = 'green'
-          setTimeout(() => {
-            window.location.href = '/protected'
-          }, 2000)
-        } else {
-          registerSpan.innerText = 'Ocurrio un error a iniciar sesion'
-          registerSpan.style.color = 'red'
-        }
-      })
-    })
+  fetch('/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ usuario: username, contraseña: password }) // Cambié las claves
+  })
+  .then(res => {
+    if (res.ok) {
+      registerSpan.innerText = 'Registro exitoso ... Entrando ...'
+      registerSpan.style.color = 'green'
+      setTimeout(() => {
+        window.location.href = '/protected'
+      }, 2000)
+    } else {
+      registerSpan.innerText = 'Ocurrió un error al registrarse'
+      registerSpan.style.color = 'red'
+    }
+  })
+})
 
-    logoutButton?.addEventListener('click', e => {
-      e.preventDefault()
-      fetch('/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
-        console.log(res)
-        window.location.href = '/'
-      })
-    })
+logoutButton?.addEventListener('click', e => {
+  e.preventDefault()
+  fetch('/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(res => {
+    window.location.href = '/'
+  })
+})
+
   </script>
 </body>
 

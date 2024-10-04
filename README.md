@@ -2,7 +2,18 @@
 
 ### Instalacion
 1. Clona el repositorio
+   ```bash
+   git clone "https://github.com/MauricioGT2024/node-de-prueba.git"
    ```
-   git clone ""
+2. Entra en la carpeta creada
+   ```bash
+   cd node-de-prueba/
    ```
-
+3. Instala lo necesesario
+   ```bash
+   npm install o npm i
+   ```
+4. Inicie la pagina
+   ```bash
+   npm run dev
+   ```

@@ -17,3 +17,5 @@
    ```bash
    npm run dev
    ```
+
+ _el registro no anda bien al registrase salta que no esta autorizado pero si se logueo anda bien_
